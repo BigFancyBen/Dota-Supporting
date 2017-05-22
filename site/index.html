@@ -1,0 +1,61 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Dota2 Support Analyzer</title>
+  <meta name="description" content="Did you follow supporting best practices?">
+  <meta name="author" content="BigFancyBen">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+  <link rel="manifest" href="img/manifest.json">
+  <link rel="mask-icon" href="img/safari-pinned-tab.svg" color="#d55b5b">
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <meta name="msapplication-config" content="img/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@BigFancyBen" />
+  <meta name="twitter:title" content="Dota2 Support Analyzer" />
+  <meta name="twitter:description" content="Did you follow supporting best practices?" />
+  <meta name="twitter:image" content="img/bingosocial.png" />
+
+</head>
+
+<body>
+  <div class="site-width">
+    <div class="site-hero">
+      <h1>Dota2 Support Analyzer</h1>
+      <div class ="how-to">
+        <h3 class="help">Help?</h3>
+        <p class= "instructions">Login to <a href="https://opendota.com">OpenDota.com</a> to enable replay parsing, this is also an easy place to find match ids.</p>
+      </div>
+      <div class="user-input">
+        <div class="form-field">
+          <div class="form-label">Match ID:</div>
+          <input id="match-id" type="number" maxlength="10">
+        </div>
+        <div class="form-and">and</div>
+        <div class="form-field inline-block">
+          <div class="">Steam ID:<br></div>
+          <input id="steam-acc" type="number" maxlength="8">
+        </div>
+        <div class="form-or inline-block">
+          or
+        </div>
+        <div class="form-field inline-block">
+          <div class="form-label">Steam Name:<br></div>
+          <input id="steam-name" type="text" >
+        </div>
+      </div>
+      <button type="button" name="submit" id="submit-button">SUBMIT</button>
+    </div>
+
+  <script src="dist/js/scripts.js"></script>
+</body>
+</html>

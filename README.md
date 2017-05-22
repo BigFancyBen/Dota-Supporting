@@ -1,2 +1,2 @@
 # Dota-Supporting
-"Lint" your dota 2 support gameplay for common mistakes.
+Check your early game as a support for common mistakes (uses opendota's api)
