@@ -12,6 +12,8 @@ let data = "";
 let player = "";
 let allied_heroes = [];
 let enemy_heroes = [];
+let allied_players = [];
+let enemy_players = [];
 
 let queryString = (window.location.search).substring(1);
 if (queryString){
@@ -61,8 +63,6 @@ function makeTips () {
     if (this.status >= 200 && this.status < 400) {
       // Success!
       data = JSON.parse(this.response);
-      console.log("Entire match's data ");
-      console.log(data);
       if(player_name){
         for(let i=0; i<10; i++){
           if(data.players[i].personaname)  {
@@ -85,7 +85,7 @@ function makeTips () {
           }
         }
       }
-      //Logic
+      matchOverview();
     } else {
       console.log("opendota api error");
     }
@@ -99,5 +99,80 @@ function setPlayerVars() {
   console.log(player);
   player_won = !!player.win;
   player_side = player.isRadiant;
-  player_hero = player.hero_id;
+  matchHeroes();
+  console.log(player_hero);
+}
+
+function matchHeroes () {
+  for(let i=0; i<10; i++){
+    let cur_hero = data.players[i].hero_id;
+    for(let j=0; j<heroes.length;j++){
+    if(heroes[j].id == cur_hero){
+        if(i == player_slot){
+          allied_heroes.push(heroes[j]);
+          player_hero = heroes[j];
+        } else if (data.players[i].isRadiant == player_side){
+          allied_heroes.push(heroes[j]);
+          allied_players.push(data.players[i]);
+        } else {
+          enemy_heroes.push(heroes[j]);
+          enemy_players.push(data.players[i]);
+        }
+      }
+    }
+  }
+}
+
+function ifExists (maybeExists){
+  if(maybeExists){
+    return maybeExists;
+  }else{
+    return 0;
+  }
+}
+
+function matchOverview () {
+  let img = new Image();
+  let div = document.getElementById('summary');
+
+  let heroImg = `<img src="http://cdn.dota2.com/apps/dota2/images/heroes/${player_hero.name.substr(14)}_sb.png"></img>`;
+
+  let summary = `You ${strSwitcher(player_won, "won", "lost")} a game as
+   ${player_hero.localized_name}${courierCheck()}. Throughout the game you bought
+   ${ifExists(player.purchase_ward_observer)} observer ward${pluralTester(player.purchase_ward_observer)} and
+   ${ifExists(player.purchase_ward_sentry)} sentry ward${pluralTester(player.purchase_ward_sentry)}. You stacked
+   ${player.camps_stacked} camp${pluralTester(player.camps_stacked)}. You bought
+   ${ifExists(player.purchase.smoke_of_deceit)} smoke${pluralTester(player.purchase.smoke_of_deceit)}.`;
+
+  div.innerHTML = heroImg+"<br>"+summary;
+}
+
+function courierCheck() {
+  if(player.purchase.courier){
+    if(player.purchase.flying_courier){
+      return " you bought and upgraded the courier";
+    }
+      return " you bought the courier";
+  }
+  else if(player.purchase.flying_courier){
+    return " you upgraded the courier";
+  } else {
+    return "";
+  }
+}
+
+function strSwitcher(testerFunc, valTrue, valFalse){
+  if (testerFunc){
+    return valTrue;
+  } else {
+    return valFalse;
+  }
+}
+
+function pluralTester(value){
+  if(value == 1){
+    return "";
+  } else {
+    return "s";
+  }
 }
